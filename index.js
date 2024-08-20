@@ -59,9 +59,9 @@ let numbers = [
 ];
 
 //? PRACTICA
-app.get("/", (req, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
+// app.get("/", (req, response) => {
+//   response.send("<h1>Hello World!</h1>");
+// });
 
 app.get("/api/notes", (req, response) => {
   response.json(notes);
