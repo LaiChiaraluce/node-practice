@@ -114,7 +114,7 @@ app.post("/api/notes", (req, response) => {
 //? PRACTICA CON GUIA TELEFONICA
 app.get("/api/phones", (req, response) => {
   Phone.find({}).then((res) => {
-    response.json(res).status(200);
+    response.status(200).json(res);
   });
 });
 
