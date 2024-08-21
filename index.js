@@ -1,21 +1,25 @@
 const express = require("express");
-
 const app = express();
-app.use(express.json());
-app.use(express.static('dist'))
 
-const cors = require('cors')
-app.use(cors())
+app.use(express.json());
+
+app.use(express.static("dist")); //PARA EJECUTAR EL FRONTEND
+
+const cors = require("cors");
+app.use(cors());
+
+require("dotenv").config(); //PARA USAR VARIABLES DE ENTORNO
 
 const requestLogger = (request, response, next) => {
-  console.log('Method:', request.method)
-  console.log('Path:  ', request.path)
-  console.log('Body:  ', request.body)
-  console.log('---')
-  next()
-}
+  //MIDDLEWARE PROPIO USADO EN TODOS LOS METODOS
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
 
-app.use(requestLogger)
+app.use(requestLogger);
 
 let notes = [
   {
@@ -57,6 +61,8 @@ let numbers = [
     number: "39-23-6423122",
   },
 ];
+
+const Phone = require("./models/phone");
 
 //? PRACTICA
 app.get("/api/notes", (req, response) => {
@@ -107,7 +113,9 @@ app.post("/api/notes", (req, response) => {
 
 //? PRACTICA CON GUIA TELEFONICA
 app.get("/api/phones", (req, response) => {
-  response.json(numbers);
+  Phone.find({}).then((res) => {
+    response.json(res);
+  });
 });
 
 app.get("/api/phones/:id", (req, response) => {
@@ -156,7 +164,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint);
 
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
-})
+  console.log(`Server running on port ${PORT}`);
+});
